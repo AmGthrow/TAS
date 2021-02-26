@@ -1,7 +1,10 @@
 import keyboard
 
-# The button you press to pause/play
-record_macro = "esc"
+# The button you press to make a new macro
+record_macro_key = "esc"
+
+# The button you press to play the existing macro
+play_macro_key = "ctrl+esc"
 keyboard.press_and_release('shift+s, space')
 
 keyboard.write('The quick brown fox jumps over the lazy dog.')
