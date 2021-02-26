@@ -9,7 +9,8 @@ play_macro_key = "ctrl+esc"
 def record_macro():
     recorded=keyboard.record(until=record_macro_key)
 
-keyboard.add_hotkey('ctrl+shift+a', print, args=('triggered', 'hotkey'))
+def play_macro():
+    keyboard.play(recorded)
 
 # Press PAGE UP then PAGE DOWN to type "foobar".
 keyboard.add_hotkey('page up, page down', lambda: keyboard.write('foobar'))
