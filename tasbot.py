@@ -1,5 +1,7 @@
 import keyboard
 
+# The button you press to pause/play
+record_macro = "esc"
 keyboard.press_and_release('shift+s, space')
 
 keyboard.write('The quick brown fox jumps over the lazy dog.')
