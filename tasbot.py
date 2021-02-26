@@ -12,8 +12,10 @@ def record_macro():
 def play_macro():
     keyboard.play(recorded)
 
-# Press PAGE UP then PAGE DOWN to type "foobar".
-keyboard.add_hotkey('page up, page down', lambda: keyboard.write('foobar'))
+if __name__ == "__main__":
+    keyboard.add_hotkey(record_macro_key, record_macro)
+    keyboard.add_hotkey(play_macro_key, play_macro)
+    keyboard.wait()
 
 # keyboard.press_and_release('shift+s, space')
 
