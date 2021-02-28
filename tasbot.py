@@ -49,8 +49,7 @@ with keyboard.Events() as events:
 
 with mouse.Events() as events:
     for event in events:
-        # NOTE: Move and Scroll events have no .button attribute, so don't do those lol
-        if event.button == mouse.Button.right:
+        if hasattr(event, "button") and event.button == mouse.Button.right:
             break
         else:
             print(f"Received event {event}")
