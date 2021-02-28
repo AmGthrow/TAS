@@ -22,6 +22,7 @@
 #     m_listener.join()
 
 from pynput import keyboard
+from pynput import mouse
 
 
 def on_press(key):
@@ -42,6 +43,14 @@ with keyboard.Events() as events:
     print("started recording")
     for event in events:
         if event.key == keyboard.Key.esc:
+            break
+        else:
+            print(f"Received event {event}")
+
+with mouse.Events() as events:
+    for event in events:
+        # NOTE: Move and Scroll events have no .button attribute, so don't do those lol
+        if event.button == mouse.Button.right:
             break
         else:
             print(f"Received event {event}")
