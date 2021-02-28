@@ -28,15 +28,16 @@ def on_press(key):
 def on_release(key):
     print(f"{key} released")
     if key == keyboard.Key.esc:
-        # Stop listener
+        # Stop mouse listener
+        m_listener.stop()
+        # Stop keyboard listener
         return False
 
 
 # Collect events until released
-# ? I can release keyboard listener using esc, but how can I release mouse listener
-# ? simultaneously?
+# Release by pressing esc, see on_release()
 with keyboard.Listener(on_release=on_release, on_press=on_press) as k_listener,\
-mouse.Listener(on_click=on_click, on_scroll=on_scroll) as m_listener:
+        mouse.Listener(on_click=on_click, on_scroll=on_scroll) as m_listener:
     k_listener.join()
     m_listener.join()
 
