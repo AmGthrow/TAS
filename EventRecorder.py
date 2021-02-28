@@ -15,3 +15,8 @@ class EventRecorder:
 
     def get_timedelta(self):
         return datetime.datetime.now() - self.now
+
+    def __iter__(self):
+        for timedelta, event in self.events:
+            time.sleep(timedelta.total_seconds())
+            yield event
