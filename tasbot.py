@@ -38,6 +38,10 @@ def on_release(key):
         return False
 
 
-# Collect events until released
-with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-    listener.join()
+with keyboard.Events() as events:
+    print("started recording")
+    for event in events:
+        if event.key == keyboard.Key.esc:
+            break
+        else:
+            print("Received event {}".format(event))
