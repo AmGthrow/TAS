@@ -10,7 +10,7 @@ import time
 
 class EventRecorder:
     def __init__(self):
-        self.now = datetime.datetime.now()
+        self.t_last_event = datetime.datetime.now()
         self.events = []  # array of tuples that looks like [(timedelta, Event)]
 
     def add_event(self, event):
@@ -28,13 +28,13 @@ class EventRecorder:
             timedelta = datetime.timedelta(0)
 
         # Update what "now" is
-        self.now = datetime.datetime.now()
+        self.t_last_event = datetime.datetime.now()
 
         # add the event to the list of events in this EventRecorder
         self.events.append((timedelta, event))
 
     def get_timedelta(self):
-        return datetime.datetime.now() - self.now
+        return datetime.datetime.now() - self.t_last_event
 
     def __iter__(self):
         """Generator which uses time.sleep() to pause
