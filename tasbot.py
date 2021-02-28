@@ -26,13 +26,13 @@ from pynput import keyboard
 
 def on_press(key):
     try:
-        print("alphanumeric key {0} pressed".format(key.char))
+        print(f"alphanumeric key {key.char} pressed")
     except AttributeError:
-        print("special key {0} pressed".format(key))
+        print(f"special key {key} pressed")
 
 
 def on_release(key):
-    print("{0} released".format(key))
+    print(f"{key} released")
     if key == keyboard.Key.esc:
         # Stop listener
         return False
@@ -44,4 +44,4 @@ with keyboard.Events() as events:
         if event.key == keyboard.Key.esc:
             break
         else:
-            print("Received event {}".format(event))
+            print(f"Received event {event}")
