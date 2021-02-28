@@ -19,8 +19,13 @@ class EventRecorder:
         Args:
             event (Event): The event to be recorded
         """
-        # record how much time has passed between the last event and the current one
-        timedelta = self.get_timedelta()
+
+        if self.events:
+            # record how much time has passed between the last event and the current one
+            timedelta = self.get_timedelta()
+        else:
+            # if this is the first event, say "no time has passed"
+            timedelta = datetime.timedelta(0)
 
         # Update what "now" is
         self.now = datetime.datetime.now()
