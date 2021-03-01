@@ -30,3 +30,17 @@ class MouseEvent:
 
         def execute(self):
             mouse.position = (self.x, self.y)
+
+    class Click:
+        def __init__(self, x, y, button, pressed):
+            self.x = x
+            self.y = y
+            self.button = button
+            self.pressed = pressed
+
+        def execute(self):
+            mouse.position = (self.x, self.y)
+            if pressed:
+                mouse.press(button)
+            else:
+                mouse.release(button)
