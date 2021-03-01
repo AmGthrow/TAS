@@ -25,3 +25,7 @@ class KeyboardEvent(Event):
 
         def execute(self):
             keyboard.release(key)
+
+
+class MouseEvent(Event):
+    mouse = MouseController()
