@@ -6,8 +6,6 @@ class TASbot:
     def __init__(self):
         self.recording = False
 
-    # Collect events until released
-    # Release by pressing esc, see on_release()
     def start_recording(self):
         self.recording = True
 
@@ -64,33 +62,4 @@ recorder = TASbot()
 # Start/stop recording when pressing the hotkey ctrl + shift + F1
 with keyboard.GlobalHotKeys({
         '<ctrl>+<shift>+<f1>': recorder.toggle_recording}) as h:
-    # ! Bro I can't call stop_recording properly? It kills keyboard but not mouse
     h.join()
-
-# from pynput import keyboard
-# from pynput import mouse
-
-
-# def on_press(key):
-#     try:
-#         print(f"alphanumeric key {key.char} pressed")
-#     except AttributeError:
-#         print(f"special key {key} pressed")
-
-
-# def on_release(key):
-#     print(f"{key} released")
-#     if key == keyboard.Key.esc:
-#         # Stop listener
-#         return False
-
-
-# with keyboard.Events() as kb_events, mouse.Events() as ms_events:
-#     print("started recording")
-#     for kb_event in kb_events:
-#         if kb_event.key == keyboard.Key.esc:
-#             break
-#         else:
-#             print(f"Received event {kb_event}")
-#     for ms_event in ms_events:
-#         print(f"Received event {ms_event}")
