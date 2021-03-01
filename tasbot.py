@@ -1,41 +1,65 @@
-import keyboard
+from pynput import mouse
+from pynput import keyboard
 
-# The button you press to make a new macro
-record_macro_key = "esc"
 
-# The button you press to play the existing macro
-play_macro_key = "ctrl+esc"
+class TASbot:
+    def __init__(self):
+        self.recording = False
 
-def record_macro():
-    recorded=keyboard.record(until=record_macro_key)
+    def start_recording(self):
+        self.recording = True
 
-def play_macro():
-    keyboard.play(recorded)
+        self.k_listener = keyboard.Listener(
+            on_release=on_release, on_press=on_press)
+        self.m_listener = mouse.Listener(
+            on_click=on_click, on_scroll=on_scroll)
 
-if __name__ == "__main__":
-    keyboard.add_hotkey(record_macro_key, record_macro)
-    keyboard.add_hotkey(play_macro_key, play_macro)
-    keyboard.wait()
+        self.k_listener.start()
+        self.m_listener.start()
 
-# keyboard.press_and_release('shift+s, space')
+    def stop_recording(self):
+        self.recording = False
+        self.k_listener.stop()
+        self.m_listener.stop()
 
-# keyboard.write('The quick brown fox jumps over the lazy dog.')
+    def toggle_recording(self):
+        if self.recording:
+            self.stop_recording()
+        else:
+            self.start_recording()
 
-# keyboard.add_hotkey('ctrl+shift+a', print, args=('triggered', 'hotkey'))
 
-# # Press PAGE UP then PAGE DOWN to type "foobar".
-# keyboard.add_hotkey('page up+page down', lambda: keyboard.write('foobar'))
+def on_click(x, y, button, pressed):
+    did_press = "Press" if pressed else "Release"
+    print(f"{did_press}: ({x}, {y})")
 
-# # Blocks until you press esc.
-# keyboard.wait('esc')
 
-# # Record events until 'esc' is pressed.
-# recorded = keyboard.record(until='esc')
-# # Then replay back at three times the speed.
-# keyboard.play(recorded, speed_factor=3)
+def on_scroll(x, y, dx, dy):
+    direction = ""
+    if dy > 0:
+        direction += "Up"
+    elif dy < 0:
+        direction += "Down"
 
-# # Type @@ then press space to replace with abbreviation.
-# keyboard.add_abbreviation('@@', 'my.long.email@example.com')
+    if dx > 0:
+        direction += "Right"
+    elif dx < 0:
+        direction += "Left"
+    print(f"{direction}: ({x}, {y})")
 
-# # Block forever, like `while True`.
-# keyboard.wait()
+
+def on_press(key):
+    print(f"{key} pressed")
+
+
+def on_release(key):
+    print(f"{key} released")
+
+
+recorder = TASbot()
+
+
+# Start/stop recording when pressing the hotkey ctrl + shift + F1
+with keyboard.GlobalHotKeys({
+        '<ctrl>+<shift>+<f1>': recorder.toggle_recording}) as h:
+    h.join()
