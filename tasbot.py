@@ -33,6 +33,13 @@ class TASbot:
         self.k_listener.stop()
         self.m_listener.stop()
 
+        # Ignore the last keystroke
+        # The last keystroke is always one of the keys used in the
+        # toggle_recording() hotkey. If I record the hotkey, without popping self.events
+        # Every single call to play_recording() will automatically call
+        # toggle_recording() since the hotkey to toggle recording was ALSO recorded
+        self.events.events.pop()
+
     def toggle_recording(self):
         if self.recording:
             winsound.Beep(200, 100)
@@ -42,16 +49,17 @@ class TASbot:
             self.start_recording()
 
     def play_recording(self):
-        # ! For some insane reason, calling play_recording() directly
-        # ! In the hotkey will make it look infinitely. Somehow, containing
-        # ! play_recording() in a thread solves that. So that's why
-        # ! I have toggle_playing() but god why does it loop???
         for event in self.events:
             event.execute()
 
         # Release all held keyboard keys (usually dangling "Press" keys)
+        # When I press the hotkey to stop recording, the buttons that
+        # make up the hotkey are actually held down indefinitely
+        # since I stopped recording before I could record a Release event
         for key in keyboard.HotKey.parse(START_PLAYBACK_HOTKEY):
             Events.KeyboardEvent.Release(key).execute()
+        # for key in keyboard.HotKey.parse(TOGGLE_RECORDING_HOTKEY):
+        #     Events.KeyboardEvent.Release(key).execute()
 
     def toggle_playing(self):
         self.replay = threading.Thread(target=self.play_recording)
