@@ -80,6 +80,6 @@ recorder = TASbot()
 # Start/stop recording when pressing the hotkey ctrl + shift + F1
 # Play recording when pressing the hotkey ctrl + shift + F
 with keyboard.GlobalHotKeys({
-        '<ctrl>+<shift>+<f1>': recorder.toggle_recording,
-        '<ctrl>+<shift>+<f2>': recorder.toggle_playing}) as h:
+        TOGGLE_RECORDING_HOTKEY: recorder.toggle_recording,
+        START_PLAYBACK_HOTKEY: recorder.toggle_playing}) as h:
     h.join()
