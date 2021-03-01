@@ -1,10 +1,12 @@
 from pynput import mouse
 from pynput import keyboard
+from EventRecorder import EventRecorder
 
 
 class TASbot:
     def __init__(self):
         self.recording = False
+        self.events = EventRecorder()
 
     def start_recording(self):
         self.recording = True
@@ -27,6 +29,10 @@ class TASbot:
             self.stop_recording()
         else:
             self.start_recording()
+
+    def play_recording(self):
+        for event in self.events:
+            print(event)
 
 
 def on_click(x, y, button, pressed):
