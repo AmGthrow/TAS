@@ -1,5 +1,6 @@
 from pynput import mouse
 from pynput import keyboard
+import threading
 from EventRecorder import EventRecorder
 import Events
 
@@ -34,11 +35,17 @@ class TASbot:
         else:
             self.start_recording()
 
-    # ! MAJOR BUG: FOR SOME REASON, THIS LOOPS INDEFINITELY WHEN 
-    # ! YOU HIT CTRL SHIFT F12
     def play_recording(self):
+        # ! For some insane reason, calling play_recording() directly
+        # ! In the hotkey will make it look infinitely. Somehow, containing
+        # ! play_recording() in a thread solves that. So that's why
+        # ! I have toggle_playing but god why does it loop???
         for event in self.events:
             event.execute()
+
+    def toggle_playing(self):
+        self.replay = threading.Thread(target=self.play_recording)
+        self.replay.start()
 
     def on_click(self, x, y, button, pressed):
         event = Events.MouseEvent.Click(x, y, button, pressed)
@@ -64,5 +71,5 @@ recorder = TASbot()
 # Play recording when pressing the hotkey ctrl + shift + F
 with keyboard.GlobalHotKeys({
         '<ctrl>+<shift>+<f1>': recorder.toggle_recording,
-        '<ctrl>+<shift>+<f2>': recorder.play_recording}) as h:
+        '<ctrl>+<shift>+<f2>': recorder.toggle_playing}) as h:
     h.join()
