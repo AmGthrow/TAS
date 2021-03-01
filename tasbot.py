@@ -2,6 +2,20 @@ from pynput import mouse
 from pynput import keyboard
 
 
+class TASbot:
+    # Collect events until released
+    # Release by pressing esc, see on_release()
+    def start_recording(self):
+        with keyboard.Listener(on_release=on_release, on_press=on_press) as self.k_listener,\
+                mouse.Listener(on_click=on_click, on_scroll=on_scroll) as self.m_listener:
+            self.k_listener.join()
+            self.m_listener.join()
+
+    def stop_recording(self):
+        self.k_listener.stop()
+        self.m_listener.stop()
+
+
 def on_click(x, y, button, pressed):
     did_press = "Press" if pressed else "Release"
     print(f"{did_press}: ({x}, {y})")
