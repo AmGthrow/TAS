@@ -94,13 +94,13 @@ class MouseEvent:
             mouse.scroll(self.dx, self.dy)
             logging.info(f"Moved to ({self.x}, {self.y})")
             direction = ""
-            if dy > 0:
+            if self.dy > 0:
                 direction += "Up"
-            elif dy < 0:
+            elif self.dy < 0:
                 direction += "Down"
 
-            if dx > 0:
+            if self.dx > 0:
                 direction += "Right"
-            elif dx < 0:
+            elif self.dx < 0:
                 direction += "Left"
-            logging.info(f"Scrolled {direction}: ({x}, {y})")
+            logging.info(f"Scrolled {self.direction}: ({self.x}, {self.y})")
