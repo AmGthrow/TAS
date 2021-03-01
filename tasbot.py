@@ -3,6 +3,7 @@ from pynput import keyboard
 import threading
 from EventRecorder import EventRecorder
 import Events
+import winsound
 
 TOGGLE_RECORDING_HOTKEY = '<ctrl>+<shift>+<f1>'
 START_PLAYBACK_HOTKEY = '<ctrl>+<shift>+<f2>'
@@ -34,8 +35,10 @@ class TASbot:
 
     def toggle_recording(self):
         if self.recording:
+            winsound.Beep(200, 100)
             self.stop_recording()
         else:
+            winsound.Beep(600, 300)
             self.start_recording()
 
     def play_recording(self):
