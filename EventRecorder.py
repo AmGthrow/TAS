@@ -6,6 +6,7 @@ correct time delay between them.
 
 import datetime
 import time
+import Events
 
 
 class EventRecorder:
@@ -52,3 +53,24 @@ class EventRecorder:
         for timedelta, event in self.events:
             time.sleep(timedelta.total_seconds())
             yield event
+
+    def execute(self):
+        """Execute all of the events its recorded but ALSO release and un-click
+        all of the pressed keys/clicked buttons that weren't released /un-clicked
+        after executing everything
+        """
+        keys_to_release = set()
+        buttons_to_release = set()
+        for event in self:
+            event.execute()
+            # Remember to release the key later
+            if type(event) == Events.KeyboardEvent.Press:
+                keys_to_release.add(Events.KeyboardEvent.Release(event.key))
+            # Remember to un-click the button later
+            elif type(event) == Events.MouseEvent.Click and event.pressed:
+                buttons_to_release.add(Events.MouseEvent.Click(
+                    event.x, event.y, event.button, False))
+        for key_release in keys_to_release:
+            key_release.execute()
+        for button_release in buttons_to_release:
+            button_release.execute()

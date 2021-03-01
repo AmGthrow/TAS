@@ -49,8 +49,7 @@ class TASbot:
             self.start_recording()
 
     def play_recording(self):
-        for event in self.events:
-            event.execute()
+        self.events.execute()
 
         # Release all held keyboard keys (usually dangling "Press" keys)
         # When I press the hotkey to stop recording, the buttons that
