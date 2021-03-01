@@ -34,6 +34,8 @@ class TASbot:
         else:
             self.start_recording()
 
+    # ! MAJOR BUG: FOR SOME REASON, THIS LOOPS INDEFINITELY WHEN 
+    # ! YOU HIT CTRL SHIFT F12
     def play_recording(self):
         for event in self.events:
             event.execute()
