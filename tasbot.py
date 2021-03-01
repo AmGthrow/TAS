@@ -39,7 +39,7 @@ class TASbot:
 
     def on_click(self, x, y, button, pressed):
         did_press = "Press" if pressed else "Release"
-        print(f"{did_press}: ({x}, {y})")
+        self.events.add_event(f"{did_press}: ({x}, {y})")
 
     def on_scroll(self, x, y, dx, dy):
         direction = ""
@@ -52,13 +52,13 @@ class TASbot:
             direction += "Right"
         elif dx < 0:
             direction += "Left"
-        print(f"{direction}: ({x}, {y})")
+        self.events.add_event(f"{direction}: ({x}, {y})")
 
     def on_press(self, key):
-        print(f"{key} pressed")
+        self.events.add_event(f"{key} pressed")
 
     def on_release(self, key):
-        print(f"{key} released")
+        self.events.add_event(f"{key} released")
 
 
 recorder = TASbot()
