@@ -10,10 +10,14 @@ class TASbot:
     # Release by pressing esc, see on_release()
     def start_recording(self):
         self.recording = True
-        with keyboard.Listener(on_release=on_release, on_press=on_press) as self.k_listener,\
-                mouse.Listener(on_click=on_click, on_scroll=on_scroll) as self.m_listener:
-            self.k_listener.join()
-            self.m_listener.join()
+
+        self.k_listener = keyboard.Listener(
+            on_release=on_release, on_press=on_press)
+        self.m_listener = mouse.Listener(
+            on_click=on_click, on_scroll=on_scroll)
+
+        self.k_listener.start()
+        self.m_listener.start()
 
     def stop_recording(self):
         self.recording = False
