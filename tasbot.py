@@ -9,6 +9,9 @@ class TASbot:
         self.events = EventRecorder()
 
     def start_recording(self):
+        # Remove all recorded events and start from scratch
+        self.events.clear_events()
+
         self.recording = True
 
         self.k_listener = keyboard.Listener(
