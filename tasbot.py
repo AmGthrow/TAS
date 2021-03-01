@@ -1,6 +1,7 @@
 from pynput import mouse
 from pynput import keyboard
 from EventRecorder import EventRecorder
+import Events
 
 
 class TASbot:
@@ -35,30 +36,23 @@ class TASbot:
 
     def play_recording(self):
         for event in self.events:
-            print(event)
+            event.execute()
 
     def on_click(self, x, y, button, pressed):
-        did_press = "Press" if pressed else "Release"
-        self.events.add_event(f"{did_press}: ({x}, {y})")
+        event = Events.MouseEvent.Click(x, y, button, pressed)
+        self.events.add_event(event)
 
     def on_scroll(self, x, y, dx, dy):
-        direction = ""
-        if dy > 0:
-            direction += "Up"
-        elif dy < 0:
-            direction += "Down"
-
-        if dx > 0:
-            direction += "Right"
-        elif dx < 0:
-            direction += "Left"
-        self.events.add_event(f"{direction}: ({x}, {y})")
+        event = Events.MouseEvent.Scroll(x, y, dx, dy)
+        self.events.add_event(event)
 
     def on_press(self, key):
-        self.events.add_event(f"{key} pressed")
+        event = Events.KeyboardEvent.Press(key)
+        self.events.add_event(event)
 
     def on_release(self, key):
-        self.events.add_event(f"{key} released")
+        event = Events.KeyboardEvent.Release(key)
+        self.events.add_event(event)
 
 
 recorder = TASbot()
