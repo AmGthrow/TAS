@@ -22,5 +22,11 @@ class KeyboardEvent:
             keyboard.release(self.key)
 
 
-class MouseEvent(Event):
-    mouse = MouseController()
+class MouseEvent:
+    class Move:
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+        def execute(self):
+            mouse.position = (self.x, self.y)
