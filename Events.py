@@ -29,6 +29,15 @@ class KeyboardEvent:
             logging.info(f"Released {self.key}")
             keyboard.release(self.key)
 
+    class Tap:
+        def __init__(self, key):
+            self.key = key
+            logging.info(f"Tapping {self.key}")
+
+        def execute(self):
+            logging.info(f"Tapped {self.key}")
+            keyboard.tap(self.key)
+
 
 class MouseEvent:
     class Move:
