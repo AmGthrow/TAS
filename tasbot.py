@@ -39,9 +39,16 @@ class TASbot:
         # ! For some insane reason, calling play_recording() directly
         # ! In the hotkey will make it look infinitely. Somehow, containing
         # ! play_recording() in a thread solves that. So that's why
-        # ! I have toggle_playing but god why does it loop???
+        # ! I have toggle_playing() but god why does it loop???
         for event in self.events:
             event.execute()
+
+        # Release all held keyboard keys (usually dangling "Press" keys)
+        # ? I do NOT like that these are hardcoded, make it so that it releases
+        # ? All the hotkey buttons you use to trigger toggle_playing()
+        Events.KeyboardEvent.Release(keyboard.Key.shift).execute()
+        Events.KeyboardEvent.Release(keyboard.Key.ctrl_l).execute()
+        Events.KeyboardEvent.Release(keyboard.Key.f1).execute()
 
     def toggle_playing(self):
         self.replay = threading.Thread(target=self.play_recording)
