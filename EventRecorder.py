@@ -11,7 +11,8 @@ import time
 class EventRecorder:
     def __init__(self):
         self.t_last_event = datetime.datetime.now()
-        self.events = []  # array of tuples that looks like [(timedelta, Event)]
+        # array of tuples that looks like [(timedelta, Event)]
+        self.events = []
 
     def add_event(self, event):
         """Adds an Event to the EventRecorder, as well as the time between each event
@@ -35,6 +36,11 @@ class EventRecorder:
 
     def get_timedelta(self):
         return datetime.datetime.now() - self.t_last_event
+
+    def clear_events(self):
+        """Erase all recorded events and start from scratch
+        """
+        self.events = []
 
     def __iter__(self):
         """Generator which uses time.sleep() to pause
