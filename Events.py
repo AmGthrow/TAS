@@ -40,10 +40,10 @@ class MouseEvent:
 
         def execute(self):
             mouse.position = (self.x, self.y)
-            if pressed:
-                mouse.press(button)
+            if self.pressed:
+                mouse.press(self.button)
             else:
-                mouse.release(button)
+                mouse.release(self.button)
 
     class Scroll:
         def __init__(self, x, y, dx, dy):
