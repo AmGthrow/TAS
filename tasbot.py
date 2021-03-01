@@ -4,6 +4,9 @@ import threading
 from EventRecorder import EventRecorder
 import Events
 
+TOGGLE_RECORDING_HOTKEY = '<ctrl>+<shift>+<f1>'
+START_PLAYBACK_HOTKEY = '<ctrl>+<shift>+<f2>'
+
 
 class TASbot:
     def __init__(self):
@@ -44,11 +47,8 @@ class TASbot:
             event.execute()
 
         # Release all held keyboard keys (usually dangling "Press" keys)
-        # ? I do NOT like that these are hardcoded, make it so that it releases
-        # ? All the hotkey buttons you use to trigger toggle_playing()
-        Events.KeyboardEvent.Release(keyboard.Key.shift).execute()
-        Events.KeyboardEvent.Release(keyboard.Key.ctrl_l).execute()
-        Events.KeyboardEvent.Release(keyboard.Key.f1).execute()
+        for key in keyboard.HotKey.parse(START_PLAYBACK_HOTKEY):
+            Events.KeyboardEvent.Release(key).execute()
 
     def toggle_playing(self):
         self.replay = threading.Thread(target=self.play_recording)
