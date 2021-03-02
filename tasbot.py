@@ -1,3 +1,10 @@
+"""Contains the script which performs recording and playback
+of macros.
+
+Press <TOGGLE_RECORDING_HOTKEY> to start/stop recording
+Press <START_PLAYBACK_HOTKEY> to replay the recording
+"""
+
 from pynput import mouse
 from pynput import keyboard
 import threading
