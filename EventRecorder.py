@@ -6,7 +6,7 @@ correct time delay between them.
 
 import datetime
 import time
-import Events
+from Events import Event
 
 
 class EventRecorder:
@@ -64,11 +64,11 @@ class EventRecorder:
         for event in self:
             event.execute()
             # Remember to release the key later
-            if type(event) == Events.KeyboardEvent.Press:
-                keys_to_release.add(Events.KeyboardEvent.Release(event.key))
+            if type(event) == Event.KeyboardEvent.Press:
+                keys_to_release.add(Event.KeyboardEvent.Release(event.key))
             # Remember to un-click the button later
-            elif type(event) == Events.MouseEvent.Click and event.pressed:
-                buttons_to_release.add(Events.MouseEvent.Click(
+            elif type(event) == Event.MouseEvent.Click and event.pressed:
+                buttons_to_release.add(Event.MouseEvent.Click(
                     event.x, event.y, event.button, False))
         for key_release in keys_to_release:
             key_release.execute()
