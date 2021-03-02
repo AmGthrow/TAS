@@ -1,4 +1,3 @@
-from abc import ABC, abstractclassmethod
 from pynput.keyboard import Controller as KeyboardController
 from pynput.mouse import Controller as MouseController
 import logging
