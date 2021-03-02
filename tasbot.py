@@ -9,7 +9,7 @@ from pynput import mouse
 from pynput import keyboard
 import threading
 from EventRecorder import EventRecorder
-import Events
+from Events import Event
 import winsound
 
 TOGGLE_RECORDING_HOTKEY = '<ctrl>+<shift>+<f1>'
@@ -75,19 +75,19 @@ class TASbot:
         self.replay.start()
 
     def on_click(self, x, y, button, pressed):
-        event = Events.MouseEvent.Click(x, y, button, pressed)
+        event = Event.MouseEvent.Click(x, y, button, pressed)
         self.events.add_event(event)
 
     def on_scroll(self, x, y, dx, dy):
-        event = Events.MouseEvent.Scroll(x, y, dx, dy)
+        event = Event.MouseEvent.Scroll(x, y, dx, dy)
         self.events.add_event(event)
 
     def on_press(self, key):
-        event = Events.KeyboardEvent.Press(key)
+        event = Event.KeyboardEvent.Press(key)
         self.events.add_event(event)
 
     def on_release(self, key):
-        event = Events.KeyboardEvent.Release(key)
+        event = Event.KeyboardEvent.Release(key)
         self.events.add_event(event)
 
 
