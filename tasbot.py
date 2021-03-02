@@ -58,15 +58,6 @@ class TASbot:
     def play_recording(self):
         self.events.execute()
 
-        # Release all held keyboard keys (usually dangling "Press" keys)
-        # When I press the hotkey to stop recording, the buttons that
-        # make up the hotkey are actually held down indefinitely
-        # since I stopped recording before I could record a Release event
-        for key in keyboard.HotKey.parse(START_PLAYBACK_HOTKEY):
-            Events.KeyboardEvent.Release(key).execute()
-        # for key in keyboard.HotKey.parse(TOGGLE_RECORDING_HOTKEY):
-        #     Events.KeyboardEvent.Release(key).execute()
-
     def toggle_playing(self):
         self.replay = threading.Thread(target=self.play_recording)
         self.replay.start()
