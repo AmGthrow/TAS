@@ -40,11 +40,14 @@ class TASbot:
         self.k_listener.stop()
         self.m_listener.stop()
 
-        # Ignore the last keystroke
-        # The last keystroke is always one of the keys used in the
-        # toggle_recording() hotkey. If I record the hotkey, without popping self.events
-        # Every single call to play_recording() will automatically call
-        # toggle_recording() since the hotkey to toggle recording was ALSO recorded
+        # PROBLEM: say toggle_recording_hotkey is ctrl+shift+F1
+        # When I stop recording, I need to press ctrl+shift+F1 but
+        # The keyboard listener actually records that.
+        # So when I play the recording back, it presses ctrl+shift+F1
+        # At the end and inadvertently starts a new recording.
+        # I solve this by popping the last event since its guaranteed
+        # to be a part of the hotkey anyway, since the hotkey
+        # immediately stops recording after that last button
         self.events.events.pop()
 
     def toggle_recording(self):
