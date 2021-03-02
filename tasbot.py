@@ -22,7 +22,9 @@ class TASbot:
         self.events = EventRecorder()
 
     def start_recording(self):
-        # Remove all recorded events and start from scratch
+        """Clears whatever's been previously recorded and starts
+        recording from scratch using new Keyboard and Mouse listeners
+        """
         self.events.clear_events()
 
         self.recording = True
@@ -36,6 +38,9 @@ class TASbot:
         self.m_listener.start()
 
     def stop_recording(self):
+        """Stops the Keyboard and Mouse listeners and ends
+        the current recording
+        """
         self.recording = False
         self.k_listener.stop()
         self.m_listener.stop()
@@ -51,6 +56,10 @@ class TASbot:
         self.events.events.pop()
 
     def toggle_recording(self):
+        """Calls start_recording() with a high-pitched beep if 
+        we're currently not recording OR calls stop_recording
+        with a low-pitched beep if we're currently recording.
+        """
         if self.recording:
             winsound.Beep(200, 100)
             self.stop_recording()
@@ -86,7 +95,8 @@ recorder = TASbot()
 
 
 # Start/stop recording when pressing the hotkey ctrl + shift + F1
-# Play recording when pressing the hotkey ctrl + shift + F
+# Play recording when pressing the hotkey ctrl + shift + F2
+# Immediately panic and shut everything down when pressing ctrl + shift + esc
 with keyboard.GlobalHotKeys({
         TOGGLE_RECORDING_HOTKEY: recorder.toggle_recording,
         START_PLAYBACK_HOTKEY: recorder.play_recording,
