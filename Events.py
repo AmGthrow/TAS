@@ -1,7 +1,22 @@
+"""Class objects symboling MouseEvents (Click, Scroll, Move) and KeyboardEvents
+(Press, Release).
+
+All the Event objects have two methods: 
+ - __init__() which is called whenever the event 
+    happens (Creating a Press(Key.ctrl_l) event logs "Pressing Key.ctrl_l")
+ - execute() which simulates executing the event again
+    (calling Press(Key.ctrl_l).execute() automatically presses left control
+    and logs "Pressed Key.ctrl_l")
+
+__init__() is intended to be called when the user performs an event and 
+execute() is intended to be called when the computer intends to re-perform it
+    """
+
 from pynput.keyboard import Controller as KeyboardController
 from pynput.mouse import Controller as MouseController
 import logging
 
+# Log all events (both creation and execution) into the terminal
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(message)s')
 
