@@ -59,10 +59,10 @@ class TASbot:
             self.start_recording()
 
     def play_recording(self):
-        self.events.execute()
-
-    def toggle_playing(self):
-        self.replay = threading.Thread(target=self.play_recording)
+        """Creates a Thread which controls
+        the Mouse & Keyboard to execute the recorded events
+        """
+        self.replay = threading.Thread(target=self.events.execute)
         self.replay.start()
 
     def on_click(self, x, y, button, pressed):
@@ -89,6 +89,6 @@ recorder = TASbot()
 # Play recording when pressing the hotkey ctrl + shift + F
 with keyboard.GlobalHotKeys({
         TOGGLE_RECORDING_HOTKEY: recorder.toggle_recording,
-        START_PLAYBACK_HOTKEY: recorder.toggle_playing,
+        START_PLAYBACK_HOTKEY: recorder.play_recording,
         '<ctrl>+<shift>+<esc>': exit}) as h:
     h.join()
