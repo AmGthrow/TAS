@@ -11,7 +11,8 @@ Macro program that makes it easy to record and replay keystrokes for speed-runni
 1. Open up a terminal and run `python tasbot.py` to start the script.
 2. If you want to save a new recording, press `Ctrl + Shift + F1`
 3. If you want to replay the recording you currently have saved, press `Ctrl + Shift + F2`
-4. To instantly close the script, press `Ctrl + Shift + Esc`
+
+**NOTE** It's always a bit risky to automate your mouse and keyboard. To instantly close the script, press `Ctrl + Shift + Esc`
 
 ## Overview
 The script creates a `TASbot` instance from `tasbot.py` which is mainly responsible for listening to keystrokes and playing them back. To store the actual actions that the user is executing, an `EventRecorder` keeps a list of all the events with two bits of information:
