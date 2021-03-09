@@ -14,6 +14,9 @@ class EventRecorder:
         self.t_last_event = datetime.datetime.now()
         # array of tuples that looks like [(timedelta, Event)]
         self.events = []
+        # Whether or not the execute() function should be allowed to run
+        # (useful in multithreading to force end a thread)
+        self.playing = False
 
     def add_event(self, event):
         """Adds an Event to the EventRecorder, as well as the time between each event
@@ -62,6 +65,8 @@ class EventRecorder:
         keys_to_release = set()
         buttons_to_release = set()
         for event in self:
+            if not self.playing:
+                return
             event.execute()
             # Remember to release the key later
             if type(event) == Event.KeyboardEvent.Press:
@@ -74,3 +79,5 @@ class EventRecorder:
             key_release.execute()
         for button_release in buttons_to_release:
             button_release.execute()
+        # declare that playback is finished
+        self.playing = False

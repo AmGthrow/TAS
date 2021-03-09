@@ -74,6 +74,11 @@ class TASbot:
         self.replay = threading.Thread(target=self.events.execute)
         self.replay.start()
 
+    def toggle_playback(self):
+        self.events.playing = not self.events.playing
+        if self.events.playing:
+            self.play_recording()
+
     def on_click(self, x, y, button, pressed):
         event = Event.MouseEvent.Click(x, y, button, pressed)
         self.events.add_event(event)
@@ -99,6 +104,6 @@ recorder = TASbot()
 # Immediately panic and shut everything down when pressing ctrl + shift + esc
 with keyboard.GlobalHotKeys({
         TOGGLE_RECORDING_HOTKEY: recorder.toggle_recording,
-        START_PLAYBACK_HOTKEY: recorder.play_recording,
+        START_PLAYBACK_HOTKEY: recorder.toggle_playback,
         '<ctrl>+<shift>+<esc>': exit}) as h:
     h.join()
